@@ -94,6 +94,14 @@ a { color: inherit; }
 .nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: clamp(14px, 3vw, 32px); }
 .nav ul a { font-size: 14px; text-decoration: none; color: var(--ink-soft); padding-block: 6px; border-bottom: 1px solid transparent; transition: color .2s, border-color .2s; }
 .nav ul a:hover, .nav ul a[aria-current="true"] { color: var(--ink); border-bottom-color: currentColor; }
+.nav-right { display: flex; align-items: center; gap: clamp(14px, 3vw, 32px); }
+.lang { all: unset; cursor: pointer; display: inline-flex; gap: 4px; font: 500 11.5px/1 var(--f-mono); letter-spacing: .06em; padding: 7px 10px; border: 1px solid var(--rule); border-radius: 999px; color: var(--ink-soft); white-space: nowrap; }
+.lang:hover { border-color: var(--ink-soft); }
+.lang:focus-visible { outline: 2px solid var(--peri); outline-offset: 2px; }
+.lang .sl { opacity: .4; }
+.lang [data-l] { opacity: .45; }
+.lang [data-l].on { opacity: 1; color: var(--ink); }
+@media (max-width: 520px) { .nav ul, .nav-right { gap: 12px; } .nav ul a { font-size: 13px; } }
 @media (max-width: 520px) { .nav .mark { display: none; } .nav .wrap { justify-content: center; } }
 
 /* ---------- hero ---------- */
@@ -121,6 +129,7 @@ a { color: inherit; }
   mix-blend-mode: normal;
 }
 .hero .tag { margin: 18px 0 0; font: 400 clamp(17px, 2vw, 21px)/1.3 var(--f-display); font-style: italic; opacity: .92; }
+.hero .tag-caps { font-style: normal; letter-spacing: .14em; font-size: clamp(14px, 1.6vw, 18px); }
 .hero .index {
   margin-top: clamp(28px, 4vw, 44px);
   display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
@@ -154,6 +163,7 @@ section { padding-block: clamp(72px, 10vw, 140px); }
 .about .facts { margin: 32px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 10px 20px; padding-top: 24px; border-top: 1px solid var(--rule); font-size: 15px; }
 .about .facts dt { font: 400 12px/1.9 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
 .about .facts dd { margin: 0; }
+.about .facts .where { display: block; margin-top: 2px; font: 400 12.5px/1.5 var(--f-mono); color: var(--ink-soft); }
 .about .photos { position: relative; padding-top: 30%; }
 .about .photos .a { width: 80%; aspect-ratio: 3/4; object-fit: cover; }
 .about .photos .b { position: absolute; right: 0; top: 0; width: 40%; aspect-ratio: 3/4; object-fit: cover; border: 8px solid var(--paper); }
@@ -173,18 +183,59 @@ section { padding-block: clamp(72px, 10vw, 140px); }
 .p-ecos { --accent: var(--clay); }
 
 /* stamp titles */
-.stamp-title { margin: 0; display: flex; flex-direction: column; gap: clamp(2px, .4vw, 6px); line-height: 0; }
+.stamp-title { margin: 0; position: relative; --h: clamp(58px, 9.5vw, 118px); display: flex; flex-direction: column; gap: clamp(2px, .4vw, 6px); line-height: 0; }
 .stamp-title .row { display: flex; align-items: flex-end; gap: clamp(1px, .3vw, 4px); flex-wrap: nowrap; }
 .stamp-title img {
-  height: var(--h, clamp(58px, 9.5vw, 118px)); width: auto;
+  height: var(--h); width: auto;
   transform: rotate(var(--r, 0deg)) translateY(var(--y, 0px));
   transition: transform .35s cubic-bezier(.3,1.6,.5,1);
 }
 .stamp-title img:hover { transform: rotate(calc(var(--r, 0deg) * -2)) translateY(-6px); }
-.stamp-title .sm img { --h: clamp(36px, 5.4vw, 66px); }
+.stamp-title .sm img { --h: clamp(40px, 6.6vw, 81px); }
+.stamp-title .row.sm { position: relative; top: calc(var(--h) * -.075); }
 .stamp-title .sp { width: clamp(12px, 2vw, 26px); }
 .p-bolso .stamp-title img { filter: url(#duo-clay); }
 .p-exposure .stamp-title img, .p-ecos .stamp-title img { filter: url(#duo-clay); }
+/* the little bag hanging off the E, with LETO indented to make room */
+.stamp-title .row.indent { padding-left: calc(var(--h) * 1.02); }
+/* By Exposure layout: smaller BY, indented BY and SURE */
+#exposure .stamp-title > .row:nth-child(1) { padding-left: calc(var(--h) * .21); }
+#exposure .stamp-title > .row:nth-child(1) > img { height: calc(var(--h) * .79); }
+#exposure .stamp-title > .row:nth-child(3) { padding-left: calc(var(--h) * .276); }
+#exposure .stamp-title { gap: calc(var(--h) * .2); }
+#exposure .stamp-title > .row:nth-child(n+2) { gap: calc(var(--h) * .105); }
+.p-bolso .stamp-title img.hang {
+  position: absolute; left: calc(var(--h) * .02); top: calc(var(--h) * 1.62);
+  height: calc(var(--h) * 1.15); width: auto; filter: none;
+  transform: rotate(-3deg); transform-origin: 30% 4%;
+}
+/* small objects resting on a letter: lace on the Y, moth on the D */
+.stamp-title .perch { position: relative; display: inline-flex; }
+.stamp-title .perch img.deco { position: absolute; z-index: 2; width: auto; max-width: none; transform: none; }
+.stamp-title .perch img.lace {
+  height: calc(var(--h) * .64); left: calc(var(--h) * .007); top: calc(var(--h) * -.047);
+  transform-origin: 50% 50%; transform: rotate(-20deg);
+  filter: drop-shadow(0 2px 3px rgb(40 30 20 / .3));
+  transition: filter .9s ease, transform .6s cubic-bezier(.3,1.8,.5,1);
+}
+/* hover = "sunlight": the clear lace turns violet, like the photochromic pigment */
+.stamp-title .perch img.lace:hover {
+  transform: rotate(-12deg);
+  filter: sepia(1) saturate(6) hue-rotate(225deg) brightness(.85) drop-shadow(0 2px 3px rgb(40 30 20 / .3));
+}
+.stamp-title .perch img.moth {
+  height: calc(var(--h) * .82); left: calc(var(--h) * -.21); top: calc(var(--h) * -.37);
+  transform: rotate(5deg); transform-origin: 50% 40%;
+  filter: drop-shadow(0 3px 4px rgb(40 30 20 / .3));
+}
+.stamp-title .perch img.moth:hover { animation: flutter .5s ease-in-out 2; }
+@keyframes flutter { 0%, 100% { transform: rotate(5deg) scaleX(1); } 50% { transform: rotate(5deg) scaleX(.55); } }
+@media (prefers-reduced-motion: reduce) {
+  .stamp-title .perch img.moth:hover { animation: none; }
+  .stamp-title .perch img.lace:hover { transform: rotate(-20deg); }
+}
+.p-bolso .stamp-title img.hang:hover { transform: rotate(4deg); transition: transform .6s cubic-bezier(.3,1.8,.5,1); }
+@media (prefers-reduced-motion: reduce) { .p-bolso .stamp-title img.hang:hover { transform: rotate(-3deg); } }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 .block { margin-top: clamp(56px, 8vw, 104px); }
@@ -321,14 +372,15 @@ section { padding-block: clamp(72px, 10vw, 140px); }
 .wide img { width: 100%; }
 .wide figure { margin: 0; }
 .wide figcaption { margin-top: 12px; }
+.wide .mb-second { margin-top: clamp(28px, 4vw, 48px); }
 @media (max-width: 720px) { .ecos-hero { grid-template-columns: 1fr; } }
 .dev { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(12px, 2vw, 24px); }
 .dev figure { margin: 0; }
-.dev img { width: 100%; height: clamp(200px, 22vw, 300px); object-fit: contain; background: #fff; }
+.dev img { width: 100%; height: clamp(200px, 22vw, 300px); object-fit: contain; }
 .dev .dev-flats { grid-column: span 2; }
 .ecos-palette figure { margin: 0; max-width: 560px; }
 .ecos-palette img { width: 100%; }
-.dev figcaption { margin-top: 10px; }
+.dev figcaption { margin-top: 10px; text-align: center; }
 /* equal-height row: each photo grows by its own width-to-height ratio */
 .ai-grid { display: flex; gap: clamp(12px, 2vw, 24px); }
 .ai-grid figure { margin: 0; flex: var(--ar) 1 0; min-width: 0; }
@@ -399,12 +451,15 @@ footer a { text-decoration: none; }
 <nav class="nav" aria-label="Main">
   <div class="wrap">
     <a class="mark" href="#home">Jessica Duffy</a>
-    <ul>
+    <div class="nav-right">
+      <ul>
       <li><a href="#home">Home</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#work">Projects</a></li>
       <li><a href="#contact">Contact</a></li>
-    </ul>
+      </ul>
+      <button class="lang" id="langBtn" type="button" aria-label="Ver en español"><span data-l="en">EN</span><span class="sl">/</span><span data-l="es">ES</span></button>
+    </div>
   </div>
 </nav>
 
@@ -413,7 +468,7 @@ footer a { text-decoration: none; }
     <h1>Jessica Duffy</h1>
     <img class="hero-photo" src="portrait-annecy.jpg" alt="Jessica smiling on a canal bridge lined with flowers and old houses" width="1200" height="1600">
     <p class="portfolio" aria-label="Portfolio">PORTFOLIO</p>
-    <p class="tag">designer and maker</p>
+    <p class="tag tag-caps">FASHION · PRODUCTION · SOURCING</p>
     <nav class="index" aria-label="Projects">
       <a href="#bolso">Bolso Esqueleto</a>
       <a href="#exposure">By Exposure</a>
@@ -428,14 +483,13 @@ footer a { text-decoration: none; }
       <div class="text">
         <p class="eyebrow">About</p>
         <h2 class="section-title">A little about me</h2>
-        <p>I’ve always loved making things, from crocheting and sewing to ceramics, jewelry, and most recently, stamps carved out of erasers. I’m especially interested in how the process of making can impact an individual’s view of themselves and how it can bring people together.</p>
-        <p>I grew up in Guadalajara, México, and moved to the U.S. at fifteen. Later on, I studied Business Administration with a concentration in Marketing (and a minor in Art and Design) at North Carolina State University, and I recently completed a Master’s degree in Technology and Innovation in Fashion Design in Madrid. My background has allowed me to bridge cultures and approach fashion from both creative and practical perspectives.</p>
-        <p>During my Master’s, I became particularly interested in materials, sourcing, and production, while continuing to explore my own creative practice through making. I’m curious, hands-on, and always looking for something new to learn.</p>
+        <p>I’ve always loved making things, from crocheting and sewing to ceramics, jewelry, and most recently, stamps carved out of erasers. This hands-on approach has shaped the way I think about fashion, and during my Master’s I became particularly interested in materials, sourcing, and production. I’m especially interested in how the process of making can shape the way we see ourselves and how it can bring people together.</p>
+        <p>I grew up in Guadalajara, México, and moved to the U.S. at fifteen. Later on, I studied Business Administration with a concentration in Marketing and a minor in Art and Design at North Carolina State University, and I recently completed a Master’s degree in Technology and Innovation in Fashion Design in Madrid. This combination of experiences has allowed me to bridge cultures and approach fashion from both creative and practical perspectives.</p>
+        <p>I’m curious, hands-on, and always looking for something new to learn. I enjoy understanding how things work, trying new processes, and finding ways to bring creative ideas into something tangible.</p>
         <dl class="facts">
-          <dt>From</dt><dd>Guadalajara, México</dd>
-          <dt>B.S.</dt><dd>Business Administration, Marketing · minor in Art and Design, NC State</dd>
-          <dt>Master’s</dt><dd>Technology and Innovation in Fashion Design, Madrid</dd>
-          <dt>Makes</dt><dd>Crochet, sewing, ceramics, jewelry, eraser stamps</dd>
+          <dt>From</dt><dd>Guadalajara, México and Acton, Massachusetts</dd>
+          <dt>Master’s</dt><dd>Máster en Tecnología e Innovación en Diseño de Moda<span class="where">Universidad Politécnica de Madrid · September 2025 – September 2026</span></dd>
+          <dt>Bachelor’s</dt><dd>Business Administration · Concentration: Marketing · Minor: Art and Design<span class="where">North Carolina State University · August 2020 – May 2024</span></dd>
         </dl>
       </div>
       <div class="photos">
@@ -453,7 +507,7 @@ footer a { text-decoration: none; }
       <div class="head">
         <div>
           <p class="num">Project 01 · Accessory</p>
-          <h2 class="stamp-title" data-lines="BOLSO|ESQUE|LETO" aria-label="Bolso Esqueleto"></h2>
+          <h2 class="stamp-title" data-lines="BOLSO|ESQUE|LETO" data-hang="bolso-hanging.png" aria-label="Bolso Esqueleto"></h2>
         </div>
         <div>
           <p class="lede">This modular purse explores versatility, self-expression, and sustainability through the relationship between craftsmanship and technology. The design combines hand sewing, 3D printing, and laser cutting, using upcycled textiles to create a customizable piece.</p>
@@ -525,7 +579,7 @@ footer a { text-decoration: none; }
       <div class="head">
         <div>
           <p class="num">Project 02 · Garment</p>
-          <h2 class="stamp-title" data-lines="BY|EXPO|SURE" data-small="0" aria-label="By Exposure"></h2>
+          <h2 class="stamp-title" data-lines="BY|EXPO|SURE" data-deco="bx-lace-crop.png" data-deco-on="R" data-deco-class="lace" aria-label="By Exposure"></h2>
         </div>
         <div>
           <p class="lede">This top examines the relationship between the private and public self. Photochromic pigment reveals a lace brassiere when exposed to sunlight, reflecting how we modify and adapt parts of ourselves when perceived by others. The garment is constructed from sheets of alginate-based bioplastic, layered with piped detailing made from the same bioplastic with added photochromic pigment to create the lace brassiere.</p>
@@ -597,25 +651,38 @@ footer a { text-decoration: none; }
       <div class="head">
         <div>
           <p class="num">Project 03 · Collection</p>
-          <h2 class="stamp-title" data-lines="ECOS DEL|BOSQUE" aria-label="Ecos del Bosque"></h2>
+          <h2 class="stamp-title" data-lines="ECOS DEL|BOSQUE" data-deco="ecos-moth.png" data-deco-on="D" data-deco-class="moth" aria-label="Ecos del Bosque"></h2>
         </div>
         <div>
-          <p class="lede">Inspired by bark, moss, and earth, this collection explores the tension between the organic and the synthetic. Layered, irregular textures and imperfections evoke the feeling of natural landscapes, while geometric silhouettes draw from the structured forms and early ideas of technology of the 1960s. The contrast between soft, organic surfaces and rigid, constructed shapes creates a dialogue between nature and the industrial.</p>
-          <ul class="meta"><li>Bark</li><li>Moss</li><li>Earth</li><li>1960s silhouette</li></ul>
+          <p class="lede">Inspired by bark, moss, and earth, this collection explores the tension between the organic and the synthetic. Layered, irregular textures and imperfections evoke the feeling of natural landscapes, while the geometric silhouettes are taken from the structured forms of the 1960s and its early ideas of technology. The contrast between soft, organic surfaces and rigid, constructed shapes creates a dialogue between nature and the industrial.</p>
+          <ul class="meta"><li>Design Ideation</li><li>Pattern Development</li><li>Sewing &amp; Construction</li></ul>
         </div>
       </div>
 
       <div class="block wide">
-        <div class="block-head"><h3>Mood board</h3><p class="cap">Bark, moss, fungi, moths and water</p></div>
+        <div class="block-head"><h3>Mood board</h3><p class="cap">Texture and silhouette</p></div>
         <figure>
           <div class="wide-scroll"><img src="ecos-moodboard-crop.jpg" alt="Mood board: a woman reading in a mossy forest, mineral terraces, bark and cracked earth, moths, fungi, rippling water and flowing dresses" loading="lazy" width="1995" height="809"></div>
+          <figcaption class="cap"><b>Texture</b> bark, moss, fungi, moths and water</figcaption>
+        </figure>
+        <figure class="mb-second">
+          <div class="wide-scroll"><img src="ecos-moodboard-silhouette-v8.jpg" alt="Mood board: 1960s looks, including a white mini dress with go-go boots, a disc-mail dress on a runway, a pink tunic with flared sleeves over red trousers, laced trousers, a tartan shift dress with flap pockets, a pink shift dress and a quilted mini dress with side cut-outs" loading="lazy" width="2000" height="893"></div>
+          <figcaption class="cap"><b>Silhouette</b> 1960s</figcaption>
         </figure>
       </div>
 
       <div class="block ecos-palette">
         <figure>
-          <img src="ecos-palette.png" alt="Colour palette: moss, sky blue, rust, cream and bark" loading="lazy">
-          <figcaption class="cap" style="margin-top:12px"><b>Palette</b> moss, sky, rust, cream, bark</figcaption>
+          <img src="ecos-palette.png" alt="Colour palette: moss, sky blue, rust, cream, suede and bark" loading="lazy">
+          <figcaption class="cap" style="margin-top:12px"><b>Palette</b> moss, sky, rust, cream, suede, bark</figcaption>
+        </figure>
+      </div>
+
+      <div class="block wide">
+        <div class="block-head"><h3>Full collection</h3></div>
+        <figure>
+          <div class="wide-scroll"><img src="ecos-lineup-v2.png" alt="Line-up of the full Ecos del Bosque collection" loading="lazy"></div>
+          <figcaption class="cap"><b>Collection line-up</b></figcaption>
         </figure>
       </div>
 
@@ -623,18 +690,10 @@ footer a { text-decoration: none; }
         <div class="block-head"><h3>Design development</h3><p class="cap">Silhouette, flats and materials</p></div>
         <div class="dev">
           <figure><img src="ecos-silhouette.png" alt="The dress design drawn in blue-grey over a 1960s black-and-white photo of a model" loading="lazy"><figcaption class="cap"><b>1960s silhouette</b></figcaption></figure>
-          <figure class="dev-flats"><img src="ecos-flats.png" alt="Technical flats of the dress, front and back" loading="lazy"><figcaption class="cap"><b>Flats</b></figcaption></figure>
-          <figure><img src="ecos-swatches.jpg" alt="Fabric swatches in cream, grey and navy" loading="lazy"><figcaption class="cap"><b>Fabric swatches</b></figcaption></figure>
-          <figure><img src="ecos-trim.jpg" alt="Eyelet trim used for the lacing" loading="lazy"><figcaption class="cap"><b>Lacing trim</b></figcaption></figure>
+          <figure class="dev-flats"><img src="ecos-flats-v2.jpg" alt="Technical flats of the dress: front with laced cut-outs, back with centre zip and side cut-outs" loading="lazy"><figcaption class="cap"><b>Flats</b></figcaption></figure>
+          <figure><img src="ecos-swatches-v2.png" alt="Four folded fabric swatches in light blue, grey-blue, light grey and navy, each held with a metal clip" loading="lazy"><figcaption class="cap"><b>Fabric swatches</b></figcaption></figure>
+          <figure><img src="ecos-trim-v2.png" alt="Two strips of loop trim for the lacing, one white and one black" loading="lazy"><figcaption class="cap"><b>Lacing trim</b></figcaption></figure>
         </div>
-      </div>
-
-      <div class="block wide">
-        <div class="block-head"><h3>Full collection</h3></div>
-        <figure>
-          <div class="wide-scroll"><img src="ecos-lineup.png" alt="Line-up of the full Ecos del Bosque collection" loading="lazy"></div>
-          <figcaption class="cap"><b>Collection line-up</b></figcaption>
-        </figure>
       </div>
 
       <div class="block">
@@ -648,7 +707,7 @@ footer a { text-decoration: none; }
       </div>
 
       <div class="block">
-        <div class="block-head"><h3>In the forest</h3><p class="cap">AI-generated images of the final dress</p></div>
+        <div class="block-head"><h3>Conceptual visualization</h3><p class="cap">AI-generated images of the final dress</p></div>
         <div class="ai-grid">
           <figure style="--ar: 1.413"><img src="ecos-ai-1.jpg" alt="AI-generated image: the dress draped over a fallen log by a stream" loading="lazy"></figure>
           <figure style="--ar: 0.75"><img src="ecos-ai-5.jpg" alt="AI-generated image: model in the dress holding a book over her face" loading="lazy"></figure>
@@ -666,7 +725,8 @@ footer a { text-decoration: none; }
       </div>
       <ul>
         <li><span class="k">Email</span><a class="v" id="email" href="mailto:jessicaduffy44@gmail.com">jessicaduffy44@gmail.com</a><button class="copy" type="button" data-copy="jessicaduffy44@gmail.com">Copy</button></li>
-        <li><span class="k">Phone</span><span class="v">+1 978 881 4151</span><button class="copy" type="button" data-copy="+1 978 881 4151">Copy</button></li>
+        <li><span class="k">Phone</span><span class="v">+34 637 964 592</span><button class="copy" type="button" data-copy="+34 637 964 592">Copy</button></li>
+        <li><span class="k">WhatsApp</span><span class="v">+1 978 881 4151</span><button class="copy" type="button" data-copy="+1 978 881 4151">Copy</button></li>
         <li><span class="k">LinkedIn</span><a class="v" href="https://www.linkedin.com/in/jessicaduffy01" target="_blank" rel="noopener">linkedin.com/in/jessicaduffy01</a><span></span></li>
       </ul>
     </div>
@@ -682,8 +742,10 @@ footer a { text-decoration: none; }
   const tilt = [-2.5, 1.8, -1.2, 2.6, -0.6, 1.1, -2, 0.8, 2.2, -1.6];
   const drop = [0, 3, -2, 1, 4, -1, 2, 0, -3, 2];
   let k = 0;
+  let perch = null;
   document.querySelectorAll('.stamp-title').forEach(h => {
     h.querySelectorAll('.row').forEach(r => r.remove());
+    perch = h.dataset.deco ? { src: h.dataset.deco, on: h.dataset.decoOn, cls: h.dataset.decoClass } : null;
     h.dataset.lines.split('|').forEach((line, li, all) => {
       const row = document.createElement('span');
       row.className = 'row';
@@ -695,8 +757,16 @@ footer a { text-decoration: none; }
         const sp = document.createElement('span'); sp.className = 'sp'; row.append(sp);
         const sm = document.createElement('span'); sm.className = 'row sm'; addWord(sm, b); row.append(sm);
       } else addWord(row, line);
+      if (h.dataset.hang && li === all.length - 1) row.classList.add('indent');
       h.append(row);
     });
+    if (h.dataset.hang) {
+      const bag = document.createElement('img');
+      bag.className = 'hang';
+      bag.src = h.dataset.hang;
+      bag.alt = '';
+      h.append(bag);
+    }
   });
   function addWord(row, word) {
     [...word].forEach(ch => {
@@ -706,7 +776,18 @@ footer a { text-decoration: none; }
       img.style.setProperty('--r', tilt[k % tilt.length] + 'deg');
       img.style.setProperty('--y', drop[k % drop.length] + 'px');
       k++;
-      row.append(img);
+      if (perch && ch === perch.on) {
+        // wrap the letter so a small object can sit on it
+        const wrap = document.createElement('span');
+        wrap.className = 'perch';
+        const deco = document.createElement('img');
+        deco.className = 'deco ' + perch.cls;
+        deco.src = perch.src;
+        deco.alt = '';
+        wrap.append(img, deco);
+        row.append(wrap);
+        perch = null;
+      } else row.append(img);
     });
   }
 
@@ -743,24 +824,28 @@ footer a { text-decoration: none; }
     frame.classList.toggle('sun', on);
     bSun.setAttribute('aria-pressed', on);
     bIn.setAttribute('aria-pressed', !on);
+    const es = document.documentElement.lang === 'es';
     state.textContent = on
-      ? 'In sunlight, the photochromic pigment turns violet and the lace brassiere appears.'
-      : 'Indoors, the piped lace stays nearly clear against the bioplastic.';
+      ? (es ? 'Al sol, el pigmento fotocrómico se vuelve violeta y aparece el sujetador de encaje.' : 'In sunlight, the photochromic pigment turns violet and the lace brassiere appears.')
+      : (es ? 'En interiores, el encaje aplicado se mantiene casi transparente sobre el bioplástico.' : 'Indoors, the piped lace stays nearly clear against the bioplastic.');
   }
   bIn.addEventListener('click', () => setSun(false));
   bSun.addEventListener('click', () => setSun(true));
+  document.addEventListener('langchange', () => setSun(frame.classList.contains('sun')));
 
   // Copy buttons
   document.querySelectorAll('.copy').forEach(btn => {
     btn.addEventListener('click', () => {
       const text = btn.dataset.copy;
-      const done = () => { btn.textContent = 'Copied'; setTimeout(() => btn.textContent = 'Copy', 1600); };
+      const es = () => document.documentElement.lang === 'es';
+      const reset = () => btn.textContent = es() ? 'Copiar' : 'Copy';
+      const done = () => { btn.textContent = es() ? 'Copiado' : 'Copied'; setTimeout(reset, 1600); };
       const fallback = () => {
         const v = btn.previousElementSibling;
         const r = document.createRange(); r.selectNodeContents(v);
         const s = getSelection(); s.removeAllRanges(); s.addRange(r);
-        btn.textContent = 'Selected';
-        setTimeout(() => btn.textContent = 'Copy', 1600);
+        btn.textContent = es() ? 'Seleccionado' : 'Selected';
+        setTimeout(reset, 1600);
       };
       try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
     });
@@ -784,6 +869,149 @@ footer a { text-decoration: none; }
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.querySelectorAll('video[autoplay]').forEach(v => { v.removeAttribute('autoplay'); v.pause(); v.controls = true; });
   }
+})();
+</script>
+
+<script>
+// English / Spanish toggle. English is the text already in the page; each entry
+// below is keyed by an element's English text and holds its Spanish HTML.
+(() => {
+  const ES = {
+    // navigation and hero
+    'Home': 'Inicio',
+    'About': 'Sobre mí',
+    'Projects': 'Proyectos',
+    'Contact': 'Contacto',
+    'FASHION · PRODUCTION · SOURCING': 'MODA · PRODUCCIÓN · SOURCING',
+    // about
+    'A little about me': 'Un poco sobre mí',
+    'I’ve always loved making things, from crocheting and sewing to ceramics, jewelry, and most recently, stamps carved out of erasers. This hands-on approach has shaped the way I think about fashion, and during my Master’s I became particularly interested in materials, sourcing, and production. I’m especially interested in how the process of making can shape the way we see ourselves and how it can bring people together.':
+      'Siempre me ha encantado crear cosas con las manos, desde el crochet y la costura hasta la cerámica, la joyería y, más recientemente, sellos tallados en gomas de borrar. Esta forma práctica de trabajar ha influido en mi manera de entender la moda, y durante el máster me interesé especialmente por los materiales, el sourcing y la producción. Me interesa sobre todo cómo el proceso de crear puede cambiar la forma en que nos vemos y cómo puede unir a las personas.',
+    'I grew up in Guadalajara, México, and moved to the U.S. at fifteen. Later on, I studied Business Administration with a concentration in Marketing and a minor in Art and Design at North Carolina State University, and I recently completed a Master’s degree in Technology and Innovation in Fashion Design in Madrid. This combination of experiences has allowed me to bridge cultures and approach fashion from both creative and practical perspectives.':
+      'Crecí en Guadalajara, México, y me mudé a Estados Unidos a los quince años. Después estudié Administración y Dirección de Empresas con especialidad en Marketing y subespecialidad en Arte y Diseño en North Carolina State University, y recientemente terminé el Máster en Tecnología e Innovación en Diseño de Moda en Madrid. Esta combinación de experiencias me ha permitido tender puentes entre culturas y abordar la moda desde una perspectiva tanto creativa como práctica.',
+    'I’m curious, hands-on, and always looking for something new to learn. I enjoy understanding how things work, trying new processes, and finding ways to bring creative ideas into something tangible.':
+      'Me mueve la curiosidad, me gusta trabajar con las manos y siempre busco algo nuevo que aprender. Disfruto entendiendo cómo funcionan las cosas, probando procesos nuevos y encontrando formas de convertir ideas creativas en algo tangible.',
+    'From': 'De',
+    'Guadalajara, México and Acton, Massachusetts': 'Guadalajara, México y Acton, Massachusetts',
+    'Master’s': 'Máster',
+    'Máster en Tecnología e Innovación en Diseño de ModaUniversidad Politécnica de Madrid · September 2025 – September 2026':
+      'Máster en Tecnología e Innovación en Diseño de Moda<span class="where">Universidad Politécnica de Madrid · septiembre 2025 – septiembre 2026</span>',
+    'Bachelor’s': 'Grado',
+    'Business Administration · Concentration: Marketing · Minor: Art and DesignNorth Carolina State University · August 2020 – May 2024':
+      'Administración y Dirección de Empresas · Especialidad: Marketing · Subespecialidad: Arte y Diseño<span class="where">North Carolina State University · agosto 2020 – mayo 2024</span>',
+    // project labels
+    'Project 01 · Accessory': 'Proyecto 01 · Accesorio',
+    'Project 02 · Garment': 'Proyecto 02 · Prenda',
+    'Project 03 · Collection': 'Proyecto 03 · Colección',
+    // Bolso Esqueleto
+    'This modular purse explores versatility, self-expression, and sustainability through the relationship between craftsmanship and technology. The design combines hand sewing, 3D printing, and laser cutting, using upcycled textiles to create a customizable piece.':
+      'Este bolso modular explora la versatilidad, la autoexpresión y la sostenibilidad a través de la relación entre la artesanía y la tecnología. El diseño combina costura a mano, impresión 3D y corte láser, y utiliza textiles reutilizados para crear una pieza personalizable.',
+    'Hand sewing': 'Costura a mano',
+    '3D printing': 'Impresión 3D',
+    'Laser cutting': 'Corte láser',
+    'Upcycled textiles': 'Textiles reutilizados',
+    'The pieces': 'Las piezas',
+    'Hover a piece to name it': 'Pasa el cursor sobre una pieza para ver su nombre',
+    'Leather body': 'Cuerpo de piel',
+    'Green lining': 'Forro verde',
+    'Rope strap': 'Asa de cordón',
+    'Chain': 'Cadena',
+    '3D-printed handle': 'Asa impresa en 3D',
+    'Denim lining': 'Forro de denim',
+    'Denim strap': 'Asa de denim',
+    '1 body1 chain2 linings3 handles': '1 cuerpo<br>1 cadena<br>2 forros<br>3 asas',
+    'Process and final product': 'Proceso y producto final',
+    'Raw material → finished part': 'Material de partida → pieza terminada',
+    'Handle': 'Asa',
+    'Modeled in Blender, 3D printed': 'Modelada en Blender, impresa en 3D',
+    'Main bag structure': 'Estructura principal del bolso',
+    'Finished using a laser plotter': 'Acabada con un plóter láser',
+    'Inner lining': 'Forro interior',
+    'Machine-sewn with hand-sewn snaps': 'Cosido a máquina con broches cosidos a mano',
+    'Different pairings of the bag': 'Distintas combinaciones del bolso',
+    'Choose a pairing': 'Elige una combinación',
+    'One body, two linings, three handles and one versatile chain. Swapping the lining and handles changes the bag’s character, allowing the user to dress it up or down.':
+      'Un cuerpo, dos forros, tres asas y una cadena versátil. Al cambiar el forro y las asas cambia el carácter del bolso, lo que permite llevarlo con un estilo más casual o más arreglado.',
+    // By Exposure
+    'This top examines the relationship between the private and public self. Photochromic pigment reveals a lace brassiere when exposed to sunlight, reflecting how we modify and adapt parts of ourselves when perceived by others. The garment is constructed from sheets of alginate-based bioplastic, layered with piped detailing made from the same bioplastic with added photochromic pigment to create the lace brassiere.':
+      'Este top examina la relación entre el yo privado y el yo público. Un pigmento fotocrómico revela un sujetador de encaje al exponerse a la luz del sol, reflejando cómo modificamos y adaptamos partes de nosotros mismos cuando otros nos miran. La prenda está construida con láminas de bioplástico a base de alginato, sobre las que se aplican detalles con manga pastelera del mismo bioplástico, al que se añade pigmento fotocrómico para crear el sujetador de encaje.',
+    'Alginate bioplastic': 'Bioplástico de alginato',
+    'Photochromic pigment': 'Pigmento fotocrómico',
+    'Research': 'Investigación',
+    'References and materials': 'Referencias y materiales',
+    'Sodium alginate': '<b>Alginato de sodio</b>',
+    'Violet photochromic pigment': '<b>Pigmento fotocrómico violeta</b>',
+    'First sketch': '<b>Primer boceto</b>',
+    'Recipe': 'Receta',
+    'Flexible bioplastic': 'Bioplástico flexible',
+    'water': 'agua',
+    'sodium alginate': 'alginato de sodio',
+    'glycerin': 'glicerina',
+    'acetic acid': 'ácido acético',
+    'The piping uses the same bioplastic with violet photochromic pigment mixed in.': 'El encaje aplicado usa el mismo bioplástico mezclado con pigmento fotocrómico violeta.',
+    'Process': 'Proceso',
+    '01 Testing different application methods': '<b>01</b> Pruebas de distintos métodos de aplicación',
+    '02 Final piping on alginate sheet': '<b>02</b> Aplicación final sobre lámina de alginato',
+    '03 Final touch-ups': '<b>03</b> Retoques finales',
+    '04 Garment in the sunlight': '<b>04</b> La prenda bajo la luz del sol',
+    'Final product': 'Producto final',
+    'Try it': 'Pruébalo',
+    'Step into the light': 'Sal a la luz',
+    'Indoors': 'Interior',
+    'In sunlight': 'Al sol',
+    // Ecos del Bosque
+    'Inspired by bark, moss, and earth, this collection explores the tension between the organic and the synthetic. Layered, irregular textures and imperfections evoke the feeling of natural landscapes, while the geometric silhouettes are taken from the structured forms of the 1960s and its early ideas of technology. The contrast between soft, organic surfaces and rigid, constructed shapes creates a dialogue between nature and the industrial.':
+      'Inspirada en la corteza, el musgo y la tierra, esta colección explora la tensión entre lo orgánico y lo sintético. Las texturas superpuestas e irregulares y las imperfecciones evocan la sensación de los paisajes naturales, mientras que las siluetas geométricas toman las formas estructuradas de los años sesenta y sus primeras ideas sobre la tecnología. El contraste entre superficies suaves y orgánicas y formas rígidas y construidas crea un diálogo entre la naturaleza y lo industrial.',
+    'Design Ideation': 'Ideación de diseño',
+    'Pattern Development': 'Desarrollo de patrones',
+    'Sewing & Construction': 'Costura y confección',
+    'Texture and silhouette': 'Textura y silueta',
+    'Texture bark, moss, fungi, moths and water': '<b>Textura</b> corteza, musgo, hongos, polillas y agua',
+    'Silhouette 1960s': '<b>Silueta</b> años sesenta',
+    'Palette moss, sky, rust, cream, suede, bark': '<b>Paleta</b> musgo, cielo, óxido, crema, ante, corteza',
+    'Full collection': 'Colección completa',
+    'Collection line-up': '<b>Line-up de la colección</b>',
+    'Design development': 'Desarrollo del diseño',
+    'Silhouette, flats and materials': 'Silueta, dibujos técnicos y materiales',
+    '1960s silhouette': '<b>Silueta de los años sesenta</b>',
+    'Flats': '<b>Dibujos técnicos</b>',
+    'Fabric swatches': '<b>Muestras de tela</b>',
+    'Lacing trim': '<b>Cinta para el lazado</b>',
+    'Lacing front': '<b>Lazado delantero</b>',
+    'Back zipper': '<b>Cremallera trasera</b>',
+    'Side view front': '<b>Vista lateral delantera</b>',
+    'Close up front lacing': '<b>Detalle del lazado delantero</b>',
+    'Conceptual visualization': 'Visualización conceptual',
+    'AI-generated images of the final dress': 'Imágenes del vestido final generadas con IA',
+    // contact and footer
+    'Reach out': '<em>Hablemos</em>',
+    'Email': 'Correo',
+    'Phone': 'Teléfono',
+    'Copy': 'Copiar',
+    'Back to top ↑': 'Volver arriba ↑'
+  };
+  const SEL = '.nav ul a, .tag-caps, .eyebrow, .about h2, .about .text > p, .facts dt, .facts dd, .num, .lede, .meta li, ' +
+    '.block-head h3, .block-head .cap, figcaption, .fl-note p, .step-title, .how, .pair-stage p:not(.count), .recipe h4, ' +
+    '.recipe td, .recipe .note, .toggle button, .contact h2, .contact .k, .copy, footer a';
+  const norm = s => s.replace(/\s+/g, ' ').trim();
+  const nodes = [...document.querySelectorAll(SEL)]
+    .map(el => ({ el, en: el.innerHTML, key: norm(el.textContent) }))
+    .filter(n => n.key in ES);
+  const btn = document.getElementById('langBtn');
+
+  function setLang(lang, save) {
+    document.documentElement.lang = lang;
+    nodes.forEach(n => { n.el.innerHTML = lang === 'es' ? ES[n.key] : n.en; });
+    btn.querySelectorAll('[data-l]').forEach(s => s.classList.toggle('on', s.dataset.l === lang));
+    btn.setAttribute('aria-label', lang === 'es' ? 'View in English' : 'Ver en español');
+    document.dispatchEvent(new Event('langchange'));
+    if (save) { try { localStorage.setItem('lang', lang); } catch (e) {} }
+  }
+  btn.addEventListener('click', () => setLang(document.documentElement.lang === 'es' ? 'en' : 'es', true));
+
+  let start = 'en';
+  try { start = localStorage.getItem('lang') || ((navigator.language || '').toLowerCase().startsWith('es') ? 'es' : 'en'); } catch (e) {}
+  setLang(start, false);
 })();
 </script>
 </body>
