@@ -309,6 +309,7 @@ section { padding-block: clamp(72px, 10vw, 140px); }
 .pair-stage .big img { height: 88%; width: auto; object-fit: contain; filter: drop-shadow(0 18px 18px rgb(40 30 20 / .2)); }
 .pair-stage p { margin: 0; max-width: 46ch; }
 .pair-stage .count { font: 400 clamp(40px, 6vw, 64px)/1 var(--f-display); color: var(--accent); margin-bottom: 12px; font-variant-numeric: tabular-nums; }
+.pair-stage .eyebrow { margin-bottom: 6px; }
 @media (max-width: 640px) { .pair-stage { grid-template-columns: 1fr; } .pair-stage .big { max-width: 360px; } }
 
 /* by exposure: sunlight toggle */
@@ -338,7 +339,7 @@ section { padding-block: clamp(72px, 10vw, 140px); }
 .research figure { margin: 0; }
 .research img { width: 100%; aspect-ratio: 3/4; object-fit: contain; background: var(--tile); padding: 6%; }
 .research img.fill { object-fit: cover; padding: 0; }
-.research figcaption { margin-top: 10px; }
+.research figcaption { margin-top: 10px; text-align: center; }
 @media (max-width: 720px) { .research { grid-template-columns: repeat(2, minmax(0,1fr)); } }
 
 /* recipe card */
@@ -353,6 +354,9 @@ section { padding-block: clamp(72px, 10vw, 140px); }
 .recipe td { padding: 10px 0; border-top: 1px dashed var(--rule); }
 .recipe td:first-child { width: 7.5em; color: var(--accent); }
 .recipe .note { margin: 18px 0 0; }
+.recipe h5 { margin: 24px 0 8px; font: 500 12px/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+.recipe .steps-list { margin: 0; padding-left: 1.4em; display: grid; gap: 8px; font-size: 15px; line-height: 1.5; }
+.recipe .steps-list li::marker { font: 400 13px var(--f-mono); color: var(--accent); }
 @media (max-width: 640px) { .recipe { grid-template-columns: 1fr; } .recipe img { max-height: 280px; } }
 
 /* process gallery */
@@ -565,12 +569,13 @@ footer a { text-decoration: none; }
       </div>
 
       <div class="block">
-        <div class="block-head"><h3>Different pairings of the bag</h3><p class="cap">Choose a pairing</p></div>
+        <div class="block-head"><h3>Different bag combinations</h3><p class="cap">Choose a pairing</p></div>
         <div class="pair-stage">
           <div class="big"><img id="pairBig" src="bolso-pair-01.png" alt="Bolso Esqueleto, pairing 1"></div>
           <div>
-            <p class="count" id="pairCount">01 / 10</p>
-            <p>One body, two linings, three handles and one versatile chain. Swapping the lining and handles changes the bag’s character, allowing the user to dress it up or down.</p>
+            <p class="eyebrow">Combination</p>
+            <p class="count" id="pairCount">01</p>
+            <p>One body, two linings, three handles and one versatile chain. Swapping the lining and handles changes the bag’s character, allowing it to be dressed up or down.</p>
           </div>
         </div>
         <div class="pairings" id="pairings"></div>
@@ -614,7 +619,15 @@ footer a { text-decoration: none; }
               <tr><td>6 g</td><td>glycerin</td></tr>
               <tr><td>0.05 ml</td><td>acetic acid</td></tr>
             </table>
-            <p class="note cap">The piping uses the same bioplastic with violet photochromic pigment mixed in.</p>
+            <h5>Instructions</h5>
+            <ol class="steps-list">
+              <li>Combine the water and glycerin in a bowl.</li>
+              <li>Slowly add the alginate, stirring to prevent clumping.</li>
+              <li>Let rest for 20 minutes so the alginate can absorb the moisture.</li>
+              <li>Add the acetic acid.</li>
+              <li>Pour the mixture onto a disinfected surface (to prevent mold) and let dry for up to a week, depending on thickness.</li>
+            </ol>
+            <p class="note cap">The piping uses the same bioplastic base, with violet photochromic pigment mixed in after step 3.</p>
           </div>
         </div>
       </div>
@@ -815,7 +828,7 @@ footer a { text-decoration: none; }
       big.src = 'bolso-pair-' + n + '.png';
       big.classList.toggle('small', SMALL.includes(i));
       big.alt = 'Bolso Esqueleto, pairing ' + i;
-      count.textContent = n + ' / ' + N;
+      count.textContent = n;
     });
     grid.append(b);
   }
@@ -934,13 +947,14 @@ footer a { text-decoration: none; }
     'Finished using a laser plotter': 'Acabada con un plóter láser',
     'Inner lining': 'Forro interior',
     'Machine-sewn with hand-sewn snaps': 'Cosido a máquina con broches cosidos a mano',
-    'Different pairings of the bag': 'Distintas combinaciones del bolso',
+    'Different bag combinations': 'Distintas combinaciones del bolso',
     'Choose a pairing': 'Elige una combinación',
-    'One body, two linings, three handles and one versatile chain. Swapping the lining and handles changes the bag’s character, allowing the user to dress it up or down.':
+    'Combination': 'Combinación',
+    'One body, two linings, three handles and one versatile chain. Swapping the lining and handles changes the bag’s character, allowing it to be dressed up or down.':
       'Un cuerpo, dos forros, tres asas y una cadena versátil. Al cambiar el forro y las asas cambia el carácter del bolso, lo que permite llevarlo con un estilo más casual o más arreglado.',
     // By Exposure
     'This top examines the relationship between the private and public self. Photochromic pigment reveals a lace brassiere when exposed to sunlight, reflecting how we modify and adapt parts of ourselves when perceived by others. The garment is constructed from sheets of alginate-based bioplastic, layered with piped detailing made from the same bioplastic with added photochromic pigment to create the lace brassiere.':
-      'Este top examina la relación entre el yo privado y el yo público. Un pigmento fotocrómico revela un sujetador de encaje al exponerse a la luz del sol, reflejando cómo modificamos y adaptamos partes de nosotros mismos cuando otros nos miran. La prenda está construida con láminas de bioplástico a base de alginato, sobre las que se aplican detalles con manga pastelera del mismo bioplástico, al que se añade pigmento fotocrómico para crear el sujetador de encaje.',
+      'Este top explora la relación entre el ser privado y el ser público. El pigmento fotocrómico revela un sostén de encaje al exponerse a la luz solar, lo que refleja cómo modificamos y adaptamos partes de nosotros mismos cuando somos percibidos por los demás. La prenda está confeccionada con láminas de bioplástico a base de alginato, con detalles hechos del mismo bioplástico al que se le ha agregado pigmento fotocrómico para crear el sostén de encaje.',
     'Alginate bioplastic': 'Bioplástico de alginato',
     'Photochromic pigment': 'Pigmento fotocrómico',
     'Research': 'Investigación',
@@ -954,7 +968,13 @@ footer a { text-decoration: none; }
     'sodium alginate': 'alginato de sodio',
     'glycerin': 'glicerina',
     'acetic acid': 'ácido acético',
-    'The piping uses the same bioplastic with violet photochromic pigment mixed in.': 'El encaje aplicado usa el mismo bioplástico mezclado con pigmento fotocrómico violeta.',
+    'Instructions': 'Instrucciones',
+    'Combine the water and glycerin in a bowl.': 'Mezcla el agua y la glicerina en un bol.',
+    'Slowly add the alginate, stirring to prevent clumping.': 'Añade el alginato poco a poco, removiendo para evitar grumos.',
+    'Let rest for 20 minutes so the alginate can absorb the moisture.': 'Deja reposar 20 minutos para que el alginato absorba la humedad.',
+    'Add the acetic acid.': 'Añade el ácido acético.',
+        'Pour the mixture onto a disinfected surface (to prevent mold) and let dry for up to a week, depending on thickness.': 'Vierte la mezcla sobre una superficie desinfectada (para evitar el moho) y deja secar hasta una semana, según el grosor.',
+    'The piping uses the same bioplastic base, with violet photochromic pigment mixed in after step 3.': 'El encaje aplicado usa la misma base de bioplástico, mezclada con pigmento fotocrómico violeta después del paso 3.',
     'Process': 'Proceso',
     '01 Testing different application methods': '<b>01</b> Pruebas de distintos métodos de aplicación',
     '02 Final piping on alginate sheet': '<b>02</b> Aplicación final sobre lámina de alginato',
@@ -998,7 +1018,7 @@ footer a { text-decoration: none; }
   };
   const SEL = '.nav ul a, .portfolio, .tag-caps, .eyebrow, .about h2, .about .text > p, .facts dt, .facts dd, .num, .lede, .meta li, ' +
     '.block-head h3, .block-head .cap, figcaption, .fl-note p, .step-title, .how, .pair-stage p:not(.count), .recipe h4, ' +
-    '.recipe td, .recipe .note, .toggle button, .contact h2, .contact .k, .copy, footer a';
+    '.recipe td, .recipe h5, .recipe .steps-list li, .recipe .note, .toggle button, .contact h2, .contact .k, .copy, footer a';
   const norm = s => s.replace(/\s+/g, ' ').trim();
   const nodes = [...document.querySelectorAll(SEL)]
     .map(el => ({ el, en: el.innerHTML, key: norm(el.textContent) }))
